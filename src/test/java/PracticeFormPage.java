@@ -1,4 +1,5 @@
 import com.codeborne.selenide.Selenide;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ public class PracticeFormPage extends BaseTest {
 
 
     @Test
+    @DisplayName("Заполнение формы")
     public void checkSetValues(){
         AutomationPracticeForm mainPage = new AutomationPracticeForm();
         mainPage.openMainPage(BASE_URL);
@@ -38,21 +40,21 @@ public class PracticeFormPage extends BaseTest {
         Selenide.sleep(10000);
     }
 
-    @Test
-    public Map<String, String> getExpectedResultsFromModal() {
-        return Map.of(
-            "Student Name", STRING_FIRSTNAME,
-            "Student Email", EMAIL,
-            "Gender", GENDER,
-            "Mobile", PHONE_NUMBER,
-            "Date of Birth", "14 November,2025",
-            "Subjects", LANGUAGE,
-            "Hobbies", "Reading",
-            "Picture", "выходитебесы.jpg",
-            "Address", ADDRESS,
-            "State and City", "Rajasthan Jaiselmer"
-        );
+////    @Test
+//    public Map<String, String> getExpectedResultsFromModal() {
+//        return Map.of(
+//            "Student Name", STRING_FIRSTNAME,
+//            "Student Email", EMAIL,
+//            "Gender", GENDER,
+//            "Mobile", PHONE_NUMBER,
+//            "Date of Birth", "14 November,2025",
+//            "Subjects", LANGUAGE,
+//            "Hobbies", "Reading",
+//            "Picture", "выходитебесы.jpg",
+//            "Address", ADDRESS,
+//            "State and City", "Rajasthan Jaiselmer"
+//        );
+//    }
     }
-}
 
 
