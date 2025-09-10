@@ -19,11 +19,9 @@ public class PracticeFormPage extends BaseTest {
     private final static String CITY = "Jaiselmer";
 
 
-
-
     @Test
     @DisplayName("Заполнение формы")
-    public void checkSetValues(){
+    public void checkSetValues() {
         AutomationPracticeForm mainPage = new AutomationPracticeForm();
         mainPage.openMainPage(BASE_URL);
         mainPage.setValueFirstNameAndLastName(STRING_FIRSTNAME, STRING_LASTNAME);
@@ -37,24 +35,21 @@ public class PracticeFormPage extends BaseTest {
         mainPage.setAddress(ADDRESS);
         mainPage.setStateAndCity(STATE, CITY);
         mainPage.submitForm();
+        mainPage.verifyResults();
         Selenide.sleep(10000);
     }
+}
 
-////    @Test
-//    public Map<String, String> getExpectedResultsFromModal() {
-//        return Map.of(
-//            "Student Name", STRING_FIRSTNAME,
-//            "Student Email", EMAIL,
-//            "Gender", GENDER,
-//            "Mobile", PHONE_NUMBER,
-//            "Date of Birth", "14 November,2025",
-//            "Subjects", LANGUAGE,
-//            "Hobbies", "Reading",
-//            "Picture", "выходитебесы.jpg",
-//            "Address", ADDRESS,
-//            "State and City", "Rajasthan Jaiselmer"
-//        );
+//    /**
+//     */ "Я могу как-то вызвать метод проверки соответствия полей отдельно?
+//     Или как раз это можно сделать с переходом?"
+//     */
+//    @Test
+//    @DisplayName("Проверка ключей значений при появлении успешной отправке заявки")
+//    public void verifyResultsExpectedAndActual(){
+//        AutomationPracticeForm mainPage = new AutomationPracticeForm();
+//        mainPage.verifyResults();
 //    }
-    }
+//    }
 
 
