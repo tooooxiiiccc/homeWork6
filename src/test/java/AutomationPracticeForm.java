@@ -1,15 +1,9 @@
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
 
-
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.codeborne.selenide.Selenide.*;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class AutomationPracticeForm {
     private final SelenideElement firstNameInput  = $x("//input[@id='firstName']");
@@ -40,7 +34,7 @@ public class AutomationPracticeForm {
     }
 
     public void setGender(String gender) {
-        $x("//label[contains(text(),'Male')]")
+        $x("//label[contains(text(),'" + gender + "')]")
             .shouldBe(Condition.interactable)
             .click();
     }
@@ -49,14 +43,14 @@ public class AutomationPracticeForm {
         phoneNumberInput.setValue(phone);
     }
 
-    public void pickMonth(String month, String year, String day) {
+    public void pickData(String month, String year, String day) {
         $x("//input[@id='dateOfBirthInput']")
             .click();
         $x("//select[@class='react-datepicker__month-select']")
             .selectOption(month);
         $x("//select[@class='react-datepicker__year-select']")
             .selectOption(year);
-        $x("//div[contains(@class, 'react-datepicker__day') and text()='14']")
+        $x("//div[contains(@class, 'react-datepicker__day') and text()='" + day + "']")
             .shouldBe(Condition.interactable)
             .click();
 
@@ -90,49 +84,5 @@ public class AutomationPracticeForm {
 
     public void submitForm() {
         submitButton.click();
-    }
-
-    public Map<String, String> getExpectedResults() {
-        return Map.of(
-            "Student Name", "Danila Morozov",
-            "Student Email", "danila.morozov25@mail.ru",
-            "Gender", "Male",
-            "Mobile", "9266827407",
-            "Date of Birth", "14 November,2001",
-            "Subjects", "English",
-            "Hobbies", "Reading",
-            "Picture", "выходитебесы.png",
-            "Address", "ул. Пушкина, д. Колотушкина",
-            "State and City", "Rajasthan Jaiselmer"
-        );
-    }
-
-
-
-    public Map<String, String> getActualResult(){
-        Map<String, String> actualResult = new HashMap<>();
-        $(".modal-content").shouldBe(Condition.visible);
-
-        ElementsCollection rowsOfResults = $$("table tbody tr");
-
-        for (SelenideElement row : rowsOfResults) {
-            String label = row.$("td:first-child").getText();
-            String value = row.$("td:last-child").getText();
-            actualResult.put(label, value);
-        }
-        return actualResult;
-    }
-
-    public void verifyResults(){
-        Map<String, String> expectedResult = getExpectedResults();
-        Map<String, String> actualResult = getActualResult();
-
-        for (String key : expectedResult.keySet()) {
-            String actualValue = actualResult.get(key);
-            String expectedValue = expectedResult.get(key);
-
-            assertThat(actualValue).isEqualTo(expectedValue)
-                .as("Сравнение полей: " + key);
-        }
     }
 }
