@@ -1,7 +1,10 @@
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
+import java.util.HashMap;
+import java.util.Map;
 import static com.codeborne.selenide.Selenide.*;
 
 public class AutomationPracticeForm {
@@ -17,15 +20,15 @@ public class AutomationPracticeForm {
 
     public void openMainPage(String url) {
         Selenide.open(url);
-        Selenide.sleep(1000);
+        $x("//*[@id='userForm']").shouldBe(Condition.visible);
     }
 
 
     public void setValueFirstNameAndLastName(String firstName, String lastName) {
-        firstNameInput.setValue(firstName);
-        lastNameInput.setValue(lastName);
         firstNameInput.shouldBe(Condition.visible);
         lastNameInput.shouldBe(Condition.visible);
+        firstNameInput.setValue(firstName);
+        lastNameInput.setValue(lastName);
     }
 
     public void setEmailInput(String email) {
@@ -84,4 +87,19 @@ public class AutomationPracticeForm {
     public void submitForm() {
         submitButton.click();
     }
+
+    public Map<String, String> getActualResult(){
+        Map<String, String> actualResult = new HashMap<>();
+        $(".modal-content").shouldBe(Condition.visible);
+
+        ElementsCollection rowsOfResults = $$("table tbody tr");
+
+        for (SelenideElement row : rowsOfResults) {
+            String label = row.$("td:first-child").getText();
+            String value = row.$("td:last-child").getText();
+            actualResult.put(label, value);
+        }
+        return actualResult;
+    }
 }
+

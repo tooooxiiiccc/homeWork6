@@ -1,13 +1,7 @@
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.HashMap;
 import java.util.Map;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class PracticeFormPage extends BaseTest {
@@ -42,7 +36,9 @@ public class PracticeFormPage extends BaseTest {
         mainPage.setAddress(ADDRESS);
         mainPage.setStateAndCity(STATE, CITY);
         mainPage.submitForm();
-        verifyResults();
+        Map<String, String> actualResult = mainPage.getActualResult();
+        Map<String, String> expectedResult = getExpectedResults();
+        verifyResults(actualResult, expectedResult);
         Selenide.sleep(10000);
     }
 
@@ -61,24 +57,7 @@ public class PracticeFormPage extends BaseTest {
         );
     }
 
-    public Map<String, String> getActualResult(){
-        Map<String, String> actualResult = new HashMap<>();
-        $(".modal-content").shouldBe(Condition.visible);
-
-        ElementsCollection rowsOfResults = $$("table tbody tr");
-
-        for (SelenideElement row : rowsOfResults) {
-            String label = row.$("td:first-child").getText();
-            String value = row.$("td:last-child").getText();
-            actualResult.put(label, value);
-        }
-        return actualResult;
-    }
-
-    public void verifyResults(){
-        Map<String, String> expectedResult = getExpectedResults();
-        Map<String, String> actualResult = getActualResult();
-
+    public void verifyResults(Map<String, String> actualResult, Map<String, String> expectedResult) {
         for (String key : expectedResult.keySet()) {
             String actualValue = actualResult.get(key);
             String expectedValue = expectedResult.get(key);
