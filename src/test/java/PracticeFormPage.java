@@ -46,23 +46,20 @@ public class PracticeFormPage extends BaseTest {
         Selenide.sleep(10000);
     }
 
-
     public Map<String, String> getExpectedResults() {
         return Map.of(
             "Student Name", STRING_FIRSTNAME + " " + STRING_LASTNAME,
             "Student Email", EMAIL,
             "Gender", GENDER,
             "Mobile", PHONE_NUMBER,
-            "Date of Birth", DAY + MONTH + "," + YEAR,
+            "Date of Birth", DAY + " " + MONTH + "," + YEAR,
             "Subjects", LANGUAGE,
             "Hobbies", "Reading",
             "Picture", "выходитебесы.png",
             "Address", ADDRESS,
-            "State and City", STATE + CITY
+            "State and City", STATE + " " + CITY
         );
     }
-
-
 
     public Map<String, String> getActualResult(){
         Map<String, String> actualResult = new HashMap<>();
